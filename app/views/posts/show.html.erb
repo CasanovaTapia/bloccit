@@ -11,6 +11,11 @@
       <%= image_tag( @post.image.large.url ) %>
     </div>  
     <p><%= @post.markdown_body %></p>
+
+    <%= render @comments %>
+
+    <%= render partial: 'comments/form', locals: { topic: @topic, post: @post, comment: @comment } %>
+
   </div>
   <div class="col-md-4">
     <% if policy(@post).edit? %>
