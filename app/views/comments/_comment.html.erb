@@ -1,6 +1,12 @@
 <p>
   <%= comment.body %>
-  <small>
-    by <%= comment.user %>
-  </small>
+  <% if comment.user.present? %>
+    <small>
+      submitted <%= time_ago_in_words(comment.created_at) %> ago 
+      by <%= comment.user.name || comment.user.email %>
+      <% if policy(comment).destroy? %>
+        <%= link_to "Delete Comment", [@topic, @post, comment], method: :delete %>
+      <% end %>
+    </small>
+  <% end %>
 </p>
