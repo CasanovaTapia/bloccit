@@ -1,9 +1,10 @@
 class CommentsController < ApplicationController
   def create
-    @topic = Topic.find(params[:topic_id])
-    @post = @topic.posts.find(params[:post_id])
+    @post = Post.find(params[:post_id])
     @comment = @post.comments.new(comment_params)
     @comment.user_id = current_user.id
+    @topic = @post.topic
+
 
     if @comment.save
       flash[:notice] = "Comment was saved."
@@ -15,9 +16,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:topic_id])
-    @post = @topic.posts.find(params[:post_id])
+    @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
+    @topic = @post.topic
 
     authorize @comment
     if @comment.destroy
