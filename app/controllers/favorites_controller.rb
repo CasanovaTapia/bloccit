@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
       redirect_to [@post.topic, @post]
     else
       flash[:error] = "Post was not favorited. Please try again."
-      redirect_to @post
+      redirect_to [@post.topic, @post]
     end
   end
 
@@ -20,10 +20,10 @@ class FavoritesController < ApplicationController
 
     authorize favorite
     if favorite.destroy
-      flash[:notice] = "Post was unfavorited."
+      flash[:notice] = "Removed favorite."
       redirect_to [@post.topic, @post]
     else
-      flash[:error] = "Post was not unfavorited. Please try again."
+      flash[:error] = "Did not remove favorite. Please try again."
       redirect_to [@post.topic, @post]
     end
   end
