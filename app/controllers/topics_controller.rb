@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   def index
-    @topics = Topic.paginate(page: params[:page], per_page: 10)
+    @topics = Topic.visible_to(current_user).paginate(page: params[:page], per_page: 10)
     authorize @topics
   end
 
@@ -36,14 +36,14 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
-    authorize @topic 
+    authorize @topic
     if @topic.save
       redirect_to @topic, notice: "Topic was saved successfully."
     else
       flash[:error] = "Error creating topic. Please try again."
       render :new
     end
-  end  
+  end
 
   def update
     @topic = Topic.find(params[:id])

@@ -1,10 +1,13 @@
 <div class="media" id="comment-<%= comment.id %>">
   <div class="media-body">
-    <p><%= comment.body %></p>
-    <small>
-      <% if policy(comment).destroy? %>
-        <%= link_to "Delete Comment", [@post, comment], method: :delete %>
-      <% end %>
-    </small>
+    <% unless comment.user.nil? %>
+      <p><%= comment.body %></p>
+      <small>
+        <%= time_ago_in_words(comment.created_at) %> ago by <%= comment.user.name || comment.user.email %>
+        <% if policy(comment).destroy? %>
+          <%= link_to "Delete Comment", [@post, comment], method: :delete %>
+        <% end %>
+      </small>
+    <% end %>
   </div>
 </div>

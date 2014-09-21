@@ -12,6 +12,7 @@ class PostsController < ApplicationController
     @comments = @post.comments
     @comment = @post.comments.build
     authorize @post
+    authorize @topic
   end
 
   def edit
@@ -48,8 +49,8 @@ class PostsController < ApplicationController
     else
       flash[:error] = "There was an error saving the post. Please try again."
       render :new
-    end    
-  end  
+    end
+  end
 
   def update
     @topic = Topic.find(params[:topic_id])
@@ -62,8 +63,8 @@ class PostsController < ApplicationController
     else
       flash[:error] = "There was an error saving the post. Please try again"
       render :edit
-    end 
-  end  
+    end
+  end
 
   private
 
