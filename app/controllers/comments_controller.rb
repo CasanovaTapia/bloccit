@@ -6,14 +6,16 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     @comment.user_id = current_user.id
     @topic = @post.topic
-
+    @new_comment = Comment.new
 
     if @comment.save
       flash[:notice] = "Comment was saved."
-      redirect_to [@topic, @post]
     else
       flash[:error] = "There was an error saving the comment. Please try again."
-      redirect_to [@topic, @post]
+    end
+
+    respond_with(@comment) do |format|
+      format.html { redirect_to [@post.topic, @post] }
     end
   end
 
@@ -32,7 +34,6 @@ class CommentsController < ApplicationController
     respond_with(@comment) do |format|
       format.html { redirect_to [@post.topic, @post] }
     end
-    
   end
 
 
